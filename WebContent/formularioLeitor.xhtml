@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:h="http://java.sun.com/jsf/html"
+xmlns:f="http://java.sun.com/jsf/core"
+xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Game of Thrones</title>
+</h:head>
+<h:body>
+	<p:panel header="Cadastrar Leitor" >
+		<p:messages showSummary="true" showDetail="false" closable="true" />
+			<h:form>
+				<h:panelGrid columns="1">
+					<p:outputLabel for="email" value="Email" />
+					<p:inputText id="email" value="#{leitorMb.leitor.email}" />
+					<p:outputLabel for="nome" value="Nome" />
+					<p:inputText id="nome" value="#{leitorMb.leitor.nome}" />
+					<p:outputLabel for="lema" value="Lema" />
+					
+					
+					<p:outputLabel for="editora" value="Vote em uma Editora" />
+					<p:selectOneMenu id="editora" value="#{leitorMb.editora}" converter="editoraConverter">
+						<f:selectItems var="editora" value="#{leitorMb.editoras}" itemLabel="#{editora.nome}" itemValue="#{editora}" />
+					</p:selectOneMenu>
+					
+					<p:outputLabel for="personagem" value="Vote em um Personagem" />
+					<p:selectOneMenu id="personagem" value="#{leitorMb.personagem}" converter="personagemConverter">
+						<f:selectItems var="personagem" value="#{leitorMb.personagens}" itemLabel="#{personagem.nome}" itemValue="#{personagem}" />
+					</p:selectOneMenu>
+					
+					<p:commandButton value="Salvar" action="#{leitorMb.salvar(editora,personagem)}" ajax="false" />
+				</h:panelGrid>
+			</h:form>
+	</p:panel>
+</h:body>
+</html>

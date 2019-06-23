@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Personagens - HQs</title>
+</h:head>
+<h:body>
+
+	<p:dataTable var="personagem" value="#{leitorMb.personagens}">
+		<p:column headerText="Nome">
+			<h:outputText value="#{personagem.nome}" />
+		</p:column>
+
+		<p:column headerText="Votos">
+			<h:outputText value="#{personagem.votos}" />
+		</p:column>
+
+	</p:dataTable>
+	
+	<p:dataTable var="editora" value="#{leitorMb.editoras}">
+		<p:column headerText="Nome">
+			<h:outputText value="#{editora.nome}" />
+		</p:column>
+
+		<p:column headerText="Votos">
+			<h:outputText value="#{editora.votos}" />
+		</p:column>
+
+	</p:dataTable>
+	
+	<h:form>
+			<p:commandLink value="Cadastrar Leitor" action="#{leitorMb.cadastrarLeitor}" ajax="false" /><br/>
+		</h:form>
+
+</h:body>
+</html>
