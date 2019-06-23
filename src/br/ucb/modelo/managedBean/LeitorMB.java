@@ -19,7 +19,7 @@ import br.ucb.modelo.dao.PersonagemDAO;
 
 @ManagedBean(name="leitorMB")
 @SessionScoped
-public class LeitorMB implements Serializable{
+public class LeitorMB implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Leitor leitor;
 	private LeitorDAO leitorDAO;
@@ -39,7 +39,6 @@ public class LeitorMB implements Serializable{
 		this.editoras = new ArrayList<Editora>();
 		this.personagem = new Personagem();
 		this.editora = new Editora();
-		this.listar();
 	}
 
 	public String salvar(Editora editora,Personagem personagem) {

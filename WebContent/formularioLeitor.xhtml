@@ -5,7 +5,7 @@ xmlns:h="http://java.sun.com/jsf/html"
 xmlns:f="http://java.sun.com/jsf/core"
 xmlns:p="http://primefaces.org/ui">
 <h:head>
-	<title>Game of Thrones</title>
+	<title>COMICs - História em Quadrinhos</title>
 </h:head>
 <h:body>
 	<p:panel header="Cadastrar Leitor" >
@@ -17,10 +17,7 @@ xmlns:p="http://primefaces.org/ui">
 					<p:outputLabel for="nome" value="Nome" />
 					<p:inputText id="nome" value="#{leitorMB.leitor.nome}" />
 					
-					<p:outputLabel for="editora" value="Vote em uma Editora" />
-					<p:selectOneMenu id="editora" value="#{leitorMB.editora}" converter="editoraConverter">
-						<f:selectItems var="editora" value="#{leitorMB.editoras}" itemLabel="#{editora.nome}" itemValue="#{editora}" />
-					</p:selectOneMenu>
+
 					
 					<p:outputLabel for="personagem" value="Vote em um Personagem" />
 					<p:selectOneMenu id="personagem" value="#{leitorMB.personagem}" converter="personagemConverter">
