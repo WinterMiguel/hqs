@@ -6,10 +6,6 @@ import javax.persistence.Query;
 
 import br.ucb.modelo.Editora;
 
-/**
- * @author Winter Santana
- *
- */
 public class EditoraDAO extends GenericDAO<Editora> {
 	private static final long serialVersionUID = 1L;
 	

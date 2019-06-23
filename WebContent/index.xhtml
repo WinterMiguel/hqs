@@ -9,7 +9,7 @@
 </h:head>
 <h:body>
 
-	<p:dataTable var="personagem" value="#{leitorMb.personagens}">
+	<p:dataTable var="personagem" value="#{leitorMB.personagens}">
 		<p:column headerText="Nome">
 			<h:outputText value="#{personagem.nome}" />
 		</p:column>
@@ -19,8 +19,8 @@
 		</p:column>
 
 	</p:dataTable>
-	
-	<p:dataTable var="editora" value="#{leitorMb.editoras}">
+
+	<p:dataTable var="editora" value="#{leitorMB.editoras}">
 		<p:column headerText="Nome">
 			<h:outputText value="#{editora.nome}" />
 		</p:column>
@@ -30,10 +30,12 @@
 		</p:column>
 
 	</p:dataTable>
-	
+
 	<h:form>
-			<p:commandLink value="Cadastrar Leitor" action="#{leitorMb.cadastrarLeitor}" ajax="false" /><br/>
-		</h:form>
+		<p:commandLink value="Cadastrar Leitor"
+			action="#{leitorMB.cadastrarLeitor}" ajax="false" />
+		<br />
+	</h:form>
 
 </h:body>
 </html>

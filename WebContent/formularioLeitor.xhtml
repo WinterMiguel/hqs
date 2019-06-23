@@ -13,23 +13,21 @@ xmlns:p="http://primefaces.org/ui">
 			<h:form>
 				<h:panelGrid columns="1">
 					<p:outputLabel for="email" value="Email" />
-					<p:inputText id="email" value="#{leitorMb.leitor.email}" />
+					<p:inputText id="email" value="#{leitorMB.leitor.email}" />
 					<p:outputLabel for="nome" value="Nome" />
-					<p:inputText id="nome" value="#{leitorMb.leitor.nome}" />
-					<p:outputLabel for="lema" value="Lema" />
-					
+					<p:inputText id="nome" value="#{leitorMB.leitor.nome}" />
 					
 					<p:outputLabel for="editora" value="Vote em uma Editora" />
-					<p:selectOneMenu id="editora" value="#{leitorMb.editora}" converter="editoraConverter">
-						<f:selectItems var="editora" value="#{leitorMb.editoras}" itemLabel="#{editora.nome}" itemValue="#{editora}" />
+					<p:selectOneMenu id="editora" value="#{leitorMB.editora}" converter="editoraConverter">
+						<f:selectItems var="editora" value="#{leitorMB.editoras}" itemLabel="#{editora.nome}" itemValue="#{editora}" />
 					</p:selectOneMenu>
 					
 					<p:outputLabel for="personagem" value="Vote em um Personagem" />
-					<p:selectOneMenu id="personagem" value="#{leitorMb.personagem}" converter="personagemConverter">
-						<f:selectItems var="personagem" value="#{leitorMb.personagens}" itemLabel="#{personagem.nome}" itemValue="#{personagem}" />
+					<p:selectOneMenu id="personagem" value="#{leitorMB.personagem}" converter="personagemConverter">
+						<f:selectItems var="personagem" value="#{leitorMB.personagens}" itemLabel="#{personagem.nome}" itemValue="#{personagem}" />
 					</p:selectOneMenu>
 					
-					<p:commandButton value="Salvar" action="#{leitorMb.salvar(editora,personagem)}" ajax="false" />
+					<p:commandButton value="Salvar" action="#{leitorMB.salvar(editora,personagem)}" ajax="false" />
 				</h:panelGrid>
 			</h:form>
 	</p:panel>

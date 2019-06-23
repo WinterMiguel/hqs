@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import br.ucb.modelo.managedBean.LeitorMB;
+
 @Entity
 public class Leitor implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -20,7 +22,6 @@ public class Leitor implements Serializable {
 	private java.util.List<Personagem> personagens;
 	
 	public Leitor() {
-		
 	}
 
 	public String getEmail() {
