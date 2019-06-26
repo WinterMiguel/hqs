@@ -11,7 +11,7 @@ public class EditoraDAO extends GenericDAO<Editora> {
 
 	@Override
 	public List<Editora> listar() {
-		Query q = super.getEntityManager().createQuery("SELECT c FROM editora c ORDER BY c.votos DESC");
+		Query q = super.getEntityManager().createQuery("SELECT e FROM editora e ORDER BY e.votos DESC");
 		return q.getResultList();
 	}
 

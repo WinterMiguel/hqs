@@ -9,19 +9,26 @@
 </h:head>
 <h:body>
 
-	<p:dataTable var="personagem" value="#{leitorMB.personagens}">
-		<p:column headerText="Nome">
+	<p:messages showSummary="true" showDetail="false" closable="true" />
+
+	<p:dataTable var="personagem" value="#{leitorMB.personagens}" >
+		<p:column headerText="Nome - Personagens" width="100">
 			<h:outputText value="#{personagem.nome}" />
 		</p:column>
+		
+		<p:column headerText="Nome - Editora" width="100">
+			<h:outputText value="#{personagem.editora.nome}" />
+		</p:column>
 
-		<p:column headerText="Votos">
+		<p:column headerText="Votos" width="100" >
 			<h:outputText value="#{personagem.votos}" />
 		</p:column>
 
 	</p:dataTable>
 
+
 	<p:dataTable var="editora" value="#{leitorMB.editoras}">
-		<p:column headerText="Nome">
+		<p:column headerText="Nome - Editoras">
 			<h:outputText value="#{editora.nome}" />
 		</p:column>
 
@@ -31,9 +38,9 @@
 
 	</p:dataTable>
 
-	<h:form>
+	<h:form >
 		<p:commandLink value="Cadastrar Leitor"
-			action="#{leitorMB.cadastrarLeitor}" ajax="false" />
+			action="#{leitorMB.cadastrarLeitor}" ajax="false" oncomplete="location.reload()"/>
 		<br />
 	</h:form>
 

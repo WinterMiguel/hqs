@@ -35,7 +35,7 @@ public class LeitorMB implements Serializable {
 		this.editora = new Editora();
 		this.editoraDao = new EditoraDAO();
 		this.personagemDao = new PersonagemDAO();
-		listar();
+		this.listar();
 	}
 
 	public String salvar() {
@@ -50,23 +50,11 @@ public class LeitorMB implements Serializable {
 				this.editora.contarVotos();
 				this.personagem.contarVotos();
 				this.leitor.setVotou(true);
-			} else {
-				FacesContext fc = FacesContext.getCurrentInstance();
-				FacesMessage fm = new FacesMessage("Leitor Não Cadastrado");
-				fc.addMessage(null, fm);
 			}
-		} else if (leitorNovo != null && leitorNovo.getVotou()) {
+		} else if(leitorNovo != null && leitorNovo.getVotou()){
 			FacesContext fc = FacesContext.getCurrentInstance();
-			FacesMessage fm = new FacesMessage("Leitor Já Votou");
+			FacesMessage fm = new FacesMessage("Leitor Já Cadastrado");
 			fc.addMessage(null, fm);
-		} else if (leitorNovo != null && !leitorNovo.getVotou()) {
-			this.leitorDAO.cadastrarLeitor(this.leitor);
-			FacesContext fc = FacesContext.getCurrentInstance();
-			FacesMessage fm = new FacesMessage("Leitor Votou");
-			fc.addMessage(null, fm);
-			editora.contarVotos();
-			personagem.contarVotos();
-			this.leitor.setVotou(true);
 		}
 
 		return "index";
