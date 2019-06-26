@@ -26,8 +26,8 @@ xmlns:p="http://primefaces.org/ui">
 					<p:selectOneMenu id="editora" value="#{leitorMB.editora}" converter="editoraConverter">
 						<f:selectItems var="editora" value="#{leitorMB.editoras}" itemLabel="#{editora.nome}" itemValue="#{personagem}" />
 					</p:selectOneMenu>
-					
-					<p:commandButton value="Salvar" action="#{leitorMB.salvar}" ajax="false" />
+	
+					<p:commandButton value="Salvar" action="#{leitorMB.salvar}" ajax="false" oncomplete="location.reload()"/>
 				</h:panelGrid>
 			</h:form>
 	</p:panel>

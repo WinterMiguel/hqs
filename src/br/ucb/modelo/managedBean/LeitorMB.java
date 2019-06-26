@@ -15,8 +15,7 @@ import br.ucb.modelo.dao.EditoraDAO;
 import br.ucb.modelo.dao.LeitorDAO;
 import br.ucb.modelo.dao.PersonagemDAO;
 
-
-@ManagedBean(name="leitorMB")
+@ManagedBean(name = "leitorMB")
 @SessionScoped
 public class LeitorMB implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -26,8 +25,8 @@ public class LeitorMB implements Serializable {
 	private List<Editora> editoras;
 	private EditoraDAO editoraDao;
 	private PersonagemDAO personagemDao;
-	private Personagem  personagem;
-	private Editora  editora;
+	private Personagem personagem;
+	private Editora editora;
 
 	public LeitorMB() {
 		this.leitor = new Leitor();
@@ -40,114 +39,112 @@ public class LeitorMB implements Serializable {
 	}
 
 	public String salvar() {
-		
+
 		Leitor leitorNovo = this.leitorDAO.consultar(this.leitor.getEmail());
-		
-		
-		if(leitorNovo == null) {
+
+		if (leitorNovo == null) {
 			if (this.leitorDAO.cadastrarLeitor(this.leitor)) {
 				FacesContext fc = FacesContext.getCurrentInstance();
 				FacesMessage fm = new FacesMessage("Leitor Cadastrado");
-				fc.addMessage(null, fm); 
-				editora.contarVotos();
-				personagem.contarVotos();
-			}
-			else {
+				fc.addMessage(null, fm);
+				this.editora.contarVotos();
+				this.personagem.contarVotos();
+				this.leitor.setVotou(true);
+			} else {
 				FacesContext fc = FacesContext.getCurrentInstance();
-				FacesMessage fm = new FacesMessage("Leitor não Cadastrado");
-				fc.addMessage(null, fm); 
+				FacesMessage fm = new FacesMessage("Leitor Não Cadastrado");
+				fc.addMessage(null, fm);
 			}
-		}else if(leitorNovo != null && leitorNovo.getVotou()) {
+		} else if (leitorNovo != null && leitorNovo.getVotou()) {
 			FacesContext fc = FacesContext.getCurrentInstance();
 			FacesMessage fm = new FacesMessage("Leitor Já Votou");
 			fc.addMessage(null, fm);
-		}else {
+		} else if (leitorNovo != null && !leitorNovo.getVotou()) {
 			this.leitorDAO.cadastrarLeitor(this.leitor);
 			FacesContext fc = FacesContext.getCurrentInstance();
 			FacesMessage fm = new FacesMessage("Leitor Votou");
 			fc.addMessage(null, fm);
 			editora.contarVotos();
 			personagem.contarVotos();
+			this.leitor.setVotou(true);
 		}
-		
-		
+
 		return "index";
-		}
-		
-		public String cadastrarLeitor() {
-			this.leitor = new Leitor();
-			return "formularioLeitor";
-		}
+	}
 
-		public void listar() {
-			this.personagens = personagemDao.listar();
-			this.editoras = editoraDao.listar();
-		}
+	public String cadastrarLeitor() {
+		this.leitor = new Leitor();
+		return "formularioLeitor";
+	}
 
-		public Leitor getLeitor() {
-			return leitor;
-		}
+	public void listar() {
+		this.personagens = personagemDao.listar();
+		this.editoras = editoraDao.listar();
+	}
 
-		public void setLeitor(Leitor leitor) {
-			this.leitor = leitor;
-		}
+	public Leitor getLeitor() {
+		return leitor;
+	}
 
-		public LeitorDAO getLeitorDAO() {
-			return leitorDAO;
-		}
+	public void setLeitor(Leitor leitor) {
+		this.leitor = leitor;
+	}
 
-		public void setLeitorDAO(LeitorDAO leitorDAO) {
-			this.leitorDAO = leitorDAO;
-		}
+	public LeitorDAO getLeitorDAO() {
+		return leitorDAO;
+	}
 
-		public List<Personagem> getPersonagens() {
-			return personagens;
-		}
+	public void setLeitorDAO(LeitorDAO leitorDAO) {
+		this.leitorDAO = leitorDAO;
+	}
 
-		public void setPersonagens(List<Personagem> personagens) {
-			this.personagens = personagens;
-		}
+	public List<Personagem> getPersonagens() {
+		return personagens;
+	}
 
-		public List<Editora> getEditoras() {
-			return editoras;
-		}
+	public void setPersonagens(List<Personagem> personagens) {
+		this.personagens = personagens;
+	}
 
-		public void setEditoras(List<Editora> editoras) {
-			this.editoras = editoras;
-		}
+	public List<Editora> getEditoras() {
 
-		public EditoraDAO getEditoraDao() {
-			return editoraDao;
-		}
+		return editoras;
+	}
 
-		public void setEditoraDao(EditoraDAO editoraDao) {
-			this.editoraDao = editoraDao;
-		}
+	public void setEditoras(List<Editora> editoras) {
+		this.editoras = editoras;
+	}
 
-		public PersonagemDAO getPersonagemDao() {
-			return personagemDao;
-		}
+	public EditoraDAO getEditoraDao() {
+		return editoraDao;
+	}
 
-		public void setPersonagemDao(PersonagemDAO personagemDao) {
-			this.personagemDao = personagemDao;
-		}
+	public void setEditoraDao(EditoraDAO editoraDao) {
+		this.editoraDao = editoraDao;
+	}
 
-		public Personagem getPersonagem() {
-			return personagem;
-		}
+	public PersonagemDAO getPersonagemDao() {
+		return personagemDao;
+	}
 
-		public void setPersonagem(Personagem personagem) {
-			this.personagem = personagem;
-		}
+	public void setPersonagemDao(PersonagemDAO personagemDao) {
+		this.personagemDao = personagemDao;
+	}
 
-		public Editora getEditora() {
-			return editora;
-		}
+	public Personagem getPersonagem() {
+		return personagem;
+	}
 
-		public void setEditora(Editora editora) {
-			this.editora = editora;
-		}
-		
-		
-		
+	public void setPersonagem(Personagem personagem) {
+		this.personagem = personagem;
+	}
+
+	public Editora getEditora() {
+		return editora;
+	}
+
+	public void setEditora(Editora editora) {
+		this.editora = editora;
+	}
+
 }

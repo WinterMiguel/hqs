@@ -12,11 +12,6 @@ public class PersonagemDAO extends GenericDAO<Personagem> {
 	
 	@Override
 	public List<Personagem> listar() {
-		Query q = super.getEntityManager().createQuery("SELECT * FROM comic");
-		return q.getResultList();
-	}
-	
-	public List<Personagem> listarPorVotos() {
 		Query q = super.getEntityManager().createQuery("SELECT c FROM comic c ORDER BY c.votos DESC");
 		return q.getResultList();
 	}
