@@ -3,24 +3,16 @@ package br.ucb.modelo;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
-import br.ucb.modelo.managedBean.LeitorMB;
-
-@Entity
+@Entity(name="leitor")
 public class Leitor implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private String email;
 	private String nome;
 	private boolean votou;
-	@OneToMany(mappedBy="leitor")
-	private java.util.List<Personagem> personagens;
-	
+
 	public Leitor() {
 	}
 
@@ -47,5 +39,5 @@ public class Leitor implements Serializable {
 	public void setVotou(boolean votou) {
 		this.votou = votou;
 	}
-	
+
 }

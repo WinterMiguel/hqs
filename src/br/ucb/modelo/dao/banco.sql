@@ -21,7 +21,7 @@ votos int NOT NULL DEFAULT 0,
 idEditora int(10) unsigned NOT NULL,
 PRIMARY KEY (id),
 KEY fk_editora (idEditora),
-CONSTRAINT fk_editora FOREING KEY (idEditora) REFERENCES editora (id)
+CONSTRAINT fk_editora FOREIGN KEY (idEditora) REFERENCES editora (id)
 );
 
 INSERT INTO editora(nome, votos) VALUES ("DC", 0);

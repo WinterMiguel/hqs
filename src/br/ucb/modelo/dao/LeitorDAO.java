@@ -9,6 +9,6 @@ public class LeitorDAO extends GenericDAO<Leitor> {
 	public Leitor consultar(String email) {
 		// TODO Auto-generated method stub
 		return super.getEntityManager().find(Leitor.class, email);
-	}
+	}	
 
 }

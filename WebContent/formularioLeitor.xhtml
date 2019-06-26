@@ -17,14 +17,17 @@ xmlns:p="http://primefaces.org/ui">
 					<p:outputLabel for="nome" value="Nome" />
 					<p:inputText id="nome" value="#{leitorMB.leitor.nome}" />
 					
-
-					
 					<p:outputLabel for="personagem" value="Vote em um Personagem" />
 					<p:selectOneMenu id="personagem" value="#{leitorMB.personagem}" converter="personagemConverter">
 						<f:selectItems var="personagem" value="#{leitorMB.personagens}" itemLabel="#{personagem.nome}" itemValue="#{personagem}" />
 					</p:selectOneMenu>
+
+					<p:outputLabel for="editora" value="Vote em uma Editora" />
+					<p:selectOneMenu id="editora" value="#{leitorMB.editora}" converter="editoraConverter">
+						<f:selectItems var="editora" value="#{leitorMB.editoras}" itemLabel="#{editora.nome}" itemValue="#{personagem}" />
+					</p:selectOneMenu>
 					
-					<p:commandButton value="Salvar" action="#{leitorMB.salvar(editora,personagem)}" ajax="false" />
+					<p:commandButton value="Salvar" action="#{leitorMB.salvar}" ajax="false" />
 				</h:panelGrid>
 			</h:form>
 	</p:panel>

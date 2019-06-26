@@ -13,7 +13,7 @@ public class ConnectionFactory implements Serializable {
 	public static EntityManager getEntityManager() {
 		try {
 			if (emF == null)
-				emF = Persistence.createEntityManagerFactory("ugot");
+				emF = Persistence.createEntityManagerFactory("ucomics");
 		} catch (Exception e){
 			System.out.println("Erro na criação do EntityManagerFactory"+ e);
 		}

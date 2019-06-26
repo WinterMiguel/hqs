@@ -1,7 +1,6 @@
 package br.ucb.modelo.managedBean;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -33,15 +32,15 @@ public class LeitorMB implements Serializable {
 	public LeitorMB() {
 		this.leitor = new Leitor();
 		this.leitorDAO = new LeitorDAO();
-		this.editoraDao = new EditoraDAO();
-		this.personagemDao = new PersonagemDAO();
-		this.personagens = new ArrayList<Personagem>();
-		this.editoras = new ArrayList<Editora>();
 		this.personagem = new Personagem();
 		this.editora = new Editora();
+		this.editoraDao = new EditoraDAO();
+		this.personagemDao = new PersonagemDAO();
+		listar();
 	}
 
-	public String salvar(Editora editora,Personagem personagem) {
+	public String salvar() {
+		
 		Leitor leitorNovo = this.leitorDAO.consultar(this.leitor.getEmail());
 		
 		
@@ -79,12 +78,10 @@ public class LeitorMB implements Serializable {
 			this.leitor = new Leitor();
 			return "formularioLeitor";
 		}
-		
-		public String listar() {
-			this.editoras = this.editoraDao.listar();
-			this.personagens = this.personagemDao.listar();
-			
-			return "index";
+
+		public void listar() {
+			this.personagens = personagemDao.listar();
+			this.editoras = editoraDao.listar();
 		}
 
 		public Leitor getLeitor() {

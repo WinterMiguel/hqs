@@ -1,4 +1,4 @@
-package br.ucb.conversor;
+package br.ucb.modelo.conversor;
 
 import java.io.Serializable;
 
@@ -9,7 +9,7 @@ import javax.faces.convert.FacesConverter;
 import br.ucb.modelo.dao.EditoraDAO;
 import br.ucb.modelo.Editora;
 
-@FacesConverter(value="personagemConverter")
+@FacesConverter(value="editoraConverter")
 public class EditoraConverter implements Converter, Serializable {
 	private static final long serialVersionUID = 1L;
 

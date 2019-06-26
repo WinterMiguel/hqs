@@ -1,4 +1,4 @@
-package br.ucb.conversor;
+package br.ucb.modelo.conversor;
 
 import java.io.Serializable;
 
