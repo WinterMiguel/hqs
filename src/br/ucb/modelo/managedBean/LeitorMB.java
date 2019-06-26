@@ -47,14 +47,41 @@ public class LeitorMB implements Serializable {
 				FacesContext fc = FacesContext.getCurrentInstance();
 				FacesMessage fm = new FacesMessage("Leitor Cadastrado");
 				fc.addMessage(null, fm);
+			}
+		} else if (leitorNovo != null) {
+
+			FacesContext fc = FacesContext.getCurrentInstance();
+			FacesMessage fm = new FacesMessage("Leitor: " + this.leitor.getEmail() + " já cadastrado. Falta votar!");
+			fc.addMessage(null, fm);
+	} 
+
+	return "index";
+
+	}
+	
+	public String votar() {
+		Leitor leitorNovo = this.leitorDAO.consultar(this.leitor.getEmail());
+
+		if (leitorNovo == null) {
+			FacesContext fc = FacesContext.getCurrentInstance();
+			FacesMessage fm = new FacesMessage("Leitor não cadastrado");
+			fc.addMessage(null, fm);
+			return "formularioLeitor";
+		}
+
+		if (leitorNovo != null) {
+			if (leitorNovo.getVotou()) {
+				FacesContext fc = FacesContext.getCurrentInstance();
+				FacesMessage fm = new FacesMessage("Leitor: " + this.leitor.getEmail() + " já Votou");
+				fc.addMessage(null, fm);
+			} else {
 				this.editora.contarVotos();
 				this.personagem.contarVotos();
 				this.leitor.setVotou(true);
+				FacesContext fc = FacesContext.getCurrentInstance();
+				FacesMessage fm = new FacesMessage("Voto computado !");
+				fc.addMessage(null, fm);
 			}
-		} else if(leitorNovo != null && leitorNovo.getVotou()){
-			FacesContext fc = FacesContext.getCurrentInstance();
-			FacesMessage fm = new FacesMessage("Leitor Já Cadastrado");
-			fc.addMessage(null, fm);
 		}
 
 		return "index";
