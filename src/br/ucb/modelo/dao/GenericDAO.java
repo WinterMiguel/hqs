@@ -7,52 +7,54 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-public class GenericDAO<T> implements Serializable {
+public abstract class GenericDAO<T> implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@SuppressWarnings("rawtypes")
 	private Class classe;
-	private EntityManager entityManager;
-	
+	private EntityManager em;
+
 	@SuppressWarnings("rawtypes")
 	public GenericDAO() {
 		this.classe = (Class) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-		this.entityManager = ConnectionFactory.getEntityManager();
+		this.em = ConnectionFactory.getEntityManager();
 	}
-	
-	public EntityManager getEntityManager() {
-		return entityManager;
-	}
-	
-	public boolean cadastrarLeitor(T objeto) {
-		this.entityManager.getTransaction().begin();
+
+	public boolean incluir(T objeto) {
+		this.em.getTransaction().begin();
 		try {
-			this.entityManager.persist(objeto);
-			this.entityManager.getTransaction().commit();
+			this.em.persist(objeto);
+			this.em.getTransaction().commit();
 			return true;
 		} catch (Exception e) {
 			return false;
 		}
 	}
 	
-	public boolean votar(T objeto) {
-		this.entityManager.getTransaction().begin();
+	public boolean alterar(T objeto) {
+		this.em.getTransaction().begin();
 		try {
-			this.entityManager.merge(objeto);
+			this.em.merge(objeto);
+			this.em.getTransaction().commit();
 			return true;
 		} catch (Exception e) {
 			return false;
 		}
 	}
-	
+
+	@SuppressWarnings("unchecked")
+	public T consultar(long id) {
+		return (T) this.em.find(this.classe, id);
+	}
+
 	@SuppressWarnings("unchecked")
 	public List<T> listar() {
-		Query q = this.entityManager.createQuery("SELECT c FROM "+
+		Query q = this.em.createQuery("SELECT c FROM "+
 				this.classe.getName() +" c");
 		return q.getResultList();
 	}
-	
-	@SuppressWarnings("unchecked")
-	public T consultar(long id) {
-		return (T) this.entityManager.find(this.classe, id);
+
+	public EntityManager getEm() {
+		return em;
 	}
+
 }

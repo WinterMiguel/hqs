@@ -14,6 +14,7 @@ public class Leitor implements Serializable {
 	private boolean votou;
 
 	public Leitor() {
+		
 	}
 
 	public String getEmail() {

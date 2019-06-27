@@ -2,6 +2,7 @@ package br.ucb.modelo.managedBean;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -28,6 +29,8 @@ public class LeitorMB implements Serializable {
 	private Personagem personagem;
 	private Editora editora;
 
+	private static AtomicLong at = new AtomicLong();
+
 	public LeitorMB() {
 		this.leitor = new Leitor();
 		this.leitorDAO = new LeitorDAO();
@@ -43,22 +46,21 @@ public class LeitorMB implements Serializable {
 		Leitor leitorNovo = this.leitorDAO.consultar(this.leitor.getEmail());
 
 		if (leitorNovo == null) {
-			if (this.leitorDAO.cadastrarLeitor(this.leitor)) {
+			if (this.leitorDAO.incluir(this.leitor)) {
 				FacesContext fc = FacesContext.getCurrentInstance();
 				FacesMessage fm = new FacesMessage("Leitor Cadastrado");
 				fc.addMessage(null, fm);
 			}
 		} else if (leitorNovo != null) {
-
 			FacesContext fc = FacesContext.getCurrentInstance();
 			FacesMessage fm = new FacesMessage("Leitor: " + this.leitor.getEmail() + " já cadastrado. Falta votar!");
 			fc.addMessage(null, fm);
-	} 
+		}
 
-	return "index";
+		return "index";
 
 	}
-	
+
 	public String votar() {
 		Leitor leitorNovo = this.leitorDAO.consultar(this.leitor.getEmail());
 
@@ -75,11 +77,14 @@ public class LeitorMB implements Serializable {
 				FacesMessage fm = new FacesMessage("Leitor: " + this.leitor.getEmail() + " já Votou");
 				fc.addMessage(null, fm);
 			} else {
-				this.editora.contarVotos();
-				this.personagem.contarVotos();
+				this.personagem.setVotos(verificarProximoValorPersonagem());
+				this.editora.setVotos(verficarProximoValorEditora());
 				this.leitor.setVotou(true);
+				this.personagemDao.alterar(this.personagem);
+				this.leitorDAO.alterar(this.leitor);
+				this.editoraDao.alterar(this.editora);
 				FacesContext fc = FacesContext.getCurrentInstance();
-				FacesMessage fm = new FacesMessage("Voto computado !");
+				FacesMessage fm = new FacesMessage("Voto computado com sucesso!!");
 				fc.addMessage(null, fm);
 			}
 		}
@@ -95,6 +100,16 @@ public class LeitorMB implements Serializable {
 	public void listar() {
 		this.personagens = personagemDao.listar();
 		this.editoras = editoraDao.listar();
+	}
+
+	private Long verificarProximoValorPersonagem() {
+		this.personagemDao.consultar(this.personagem.getId()).getVotos();
+		return at.incrementAndGet();
+	}
+
+	private Long verficarProximoValorEditora() {
+		this.editoraDao.consultar(this.editora.getId()).getVotos();
+		return at.incrementAndGet();
 	}
 
 	public Leitor getLeitor() {
