@@ -68,7 +68,7 @@ public class LeitorMB implements Serializable {
 			FacesContext fc = FacesContext.getCurrentInstance();
 			FacesMessage fm = new FacesMessage("Leitor não cadastrado");
 			fc.addMessage(null, fm);
-			return "formularioLeitor";
+			return "formularioLeitor?faces-redirect=true";
 		}
 
 		if (leitorNovo != null) {
@@ -76,25 +76,26 @@ public class LeitorMB implements Serializable {
 				FacesContext fc = FacesContext.getCurrentInstance();
 				FacesMessage fm = new FacesMessage("Leitor: " + this.leitor.getEmail() + " já Votou");
 				fc.addMessage(null, fm);
+				return "index?faces-redirect=true";
 			} else {
 				this.personagem.setVotos(verificarProximoValorPersonagem());
-				this.editora.setVotos(verficarProximoValorEditora());
+				this.editora.setVotos(verficarProximoValorEditora() - 1);
 				this.leitor.setVotou(true);
 				this.personagemDao.alterar(this.personagem);
-				this.leitorDAO.alterar(this.leitor);
 				this.editoraDao.alterar(this.editora);
+				this.leitorDAO.alterar(this.leitor);
 				FacesContext fc = FacesContext.getCurrentInstance();
 				FacesMessage fm = new FacesMessage("Voto computado com sucesso!!");
 				fc.addMessage(null, fm);
 			}
 		}
-
-		return "index";
+		
+		return "index?faces-redirect=true";
 	}
 
 	public String cadastrarLeitor() {
 		this.leitor = new Leitor();
-		return "formularioLeitor";
+		return "formularioLeitor?faces-redirect=true";
 	}
 
 	public void listar() {

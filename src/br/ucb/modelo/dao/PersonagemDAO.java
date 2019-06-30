@@ -15,11 +15,5 @@ public class PersonagemDAO extends GenericDAO<Personagem> {
 		Query q = super.getEm().createQuery("SELECT c FROM comic c ORDER BY c.votos DESC");
 		return q.getResultList();
 	}
-	
-	/**
-	public Personagem votos() {
-		Query q = super.getEm().createQuery("SELECT c FROM comic c.votos");
-		return (Personagem) q.getSingleResult();
-	}*/
-	
+		
 }

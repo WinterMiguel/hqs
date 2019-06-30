@@ -21,7 +21,7 @@
 					ajax="false" />
 			</h:panelGrid>
 
-			<p:panel id="basic" header="Faça uma votação!" footer="Movie Details"
+			<p:panel id="basic" header="Faça uma votação!" footer="COMICS - HQs"
 				style="margin-bottom:20px">
 				<h:panelGrid columns="1" cellpadding="10">
 					<p:outputLabel for="personagem" value="Vote em um Personagem" />
@@ -37,9 +37,11 @@
 						<f:selectItems var="editora" value="#{leitorMB.editoras}"
 							itemLabel="#{editora.nome}" itemValue="#{personagem}" />
 					</p:selectOneMenu>
-					<p:commandButton value="Votar" action="#{leitorMB.votar}"
-						ajax="false" />
+
 				</h:panelGrid>
+
+				<p:commandButton value="Votar" action="#{leitorMB.votar}"
+					ajax="false"/>
 
 			</p:panel>
 
