@@ -2,11 +2,10 @@ package br.ucb.modelo.managedBean;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import br.ucb.modelo.Editora;
@@ -17,7 +16,6 @@ import br.ucb.modelo.dao.LeitorDAO;
 import br.ucb.modelo.dao.PersonagemDAO;
 
 @ManagedBean(name = "leitorMB")
-@SessionScoped
 public class LeitorMB implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Leitor leitor;
@@ -28,8 +26,6 @@ public class LeitorMB implements Serializable {
 	private PersonagemDAO personagemDao;
 	private Personagem personagem;
 	private Editora editora;
-
-	private static AtomicLong at = new AtomicLong();
 
 	public LeitorMB() {
 		this.leitor = new Leitor();
@@ -48,17 +44,25 @@ public class LeitorMB implements Serializable {
 		if (leitorNovo == null) {
 			if (this.leitorDAO.incluir(this.leitor)) {
 				FacesContext fc = FacesContext.getCurrentInstance();
-				FacesMessage fm = new FacesMessage("Leitor Cadastrado");
+				FacesMessage fm = new FacesMessage("Leitor cadastrado com sucesso!");
 				fc.addMessage(null, fm);
 			}
 		} else if (leitorNovo != null) {
-			FacesContext fc = FacesContext.getCurrentInstance();
-			FacesMessage fm = new FacesMessage("Leitor: " + this.leitor.getEmail() + " já cadastrado. Falta votar!");
-			fc.addMessage(null, fm);
+			if (leitorNovo.getVotou()) {
+				FacesContext fc = FacesContext.getCurrentInstance();
+				FacesMessage fm = new FacesMessage(
+						"Leitor: " + this.leitor.getEmail() + " já está cadastrado e já votou");
+				fc.addMessage(null, fm);
+			} else if (leitorNovo != null && !leitorNovo.getVotou()) {
+				FacesContext fc = FacesContext.getCurrentInstance();
+				FacesMessage fm = new FacesMessage(
+						"Leitor: " + this.leitor.getEmail() + " já cadastrado. Falta votar!");
+				fc.addMessage(null, fm);
+			}
 		}
 
-		return "index";
-
+		this.listar();
+		return "index?faces-redirect=true";
 	}
 
 	public String votar() {
@@ -74,12 +78,12 @@ public class LeitorMB implements Serializable {
 		if (leitorNovo != null) {
 			if (leitorNovo.getVotou()) {
 				FacesContext fc = FacesContext.getCurrentInstance();
-				FacesMessage fm = new FacesMessage("Leitor: " + this.leitor.getEmail() + " já Votou");
+				FacesMessage fm = new FacesMessage("Leitor: " + this.leitor.getEmail() + " já votou!");
 				fc.addMessage(null, fm);
-				return "index?faces-redirect=true";
+
 			} else {
-				this.personagem.setVotos(verificarProximoValorPersonagem());
-				this.editora.setVotos(verficarProximoValorEditora() - 1);
+				this.personagem.setVotos(getQuantidadeVotosPersonagem() + 1);
+				this.editora.setVotos(getQuantidadeVotosEditora() + 1);
 				this.leitor.setVotou(true);
 				this.personagemDao.alterar(this.personagem);
 				this.editoraDao.alterar(this.editora);
@@ -89,7 +93,8 @@ public class LeitorMB implements Serializable {
 				fc.addMessage(null, fm);
 			}
 		}
-		
+
+		this.listar();
 		return "index?faces-redirect=true";
 	}
 
@@ -103,14 +108,12 @@ public class LeitorMB implements Serializable {
 		this.editoras = editoraDao.listar();
 	}
 
-	private Long verificarProximoValorPersonagem() {
-		this.personagemDao.consultar(this.personagem.getId()).getVotos();
-		return at.incrementAndGet();
+	private int getQuantidadeVotosPersonagem() {
+		return this.personagemDao.consultar(this.personagem.getId()).getVotos();
 	}
 
-	private Long verficarProximoValorEditora() {
-		this.editoraDao.consultar(this.editora.getId()).getVotos();
-		return at.incrementAndGet();
+	private int getQuantidadeVotosEditora() {
+		return this.editoraDao.consultar(this.editora.getId()).getVotos();
 	}
 
 	public Leitor getLeitor() {

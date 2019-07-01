@@ -16,7 +16,7 @@ public class Personagem implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
-	private Long votos;
+	private int votos;
 	@ManyToOne
 	@JoinColumn (name = "idEditora")
 	private Editora editora;
@@ -45,11 +45,11 @@ public class Personagem implements Serializable {
 		this.nome = nome;
 	}
 
-	public Long getVotos() {
+	public int getVotos() {
 		return votos;
 	}
 
-	public void setVotos(Long votos) {
+	public void setVotos(int votos) {
 		this.votos = votos;
 	}
 
